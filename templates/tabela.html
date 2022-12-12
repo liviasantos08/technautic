@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+            <h1 class="h3 mb-0 text-gray-800">Adicionar Registros</h1>
+            <a href={% url 'form' %} class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i>Criar novo</a>
+</div>
+{% csrf_token %}
+<form action="#" method="post">
+    <div class="table-responsive">
+        <div class="card-content">
+            <div class="content">
+                <table id="tables" class="table is-fullwidth is-bordered is-hoverable is-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>DATA</th>
+                                <th>REMETENTE</th>
+                                <th>DESTINATÁRIO</th>
+                                <th>VALOR FINAL</th>
+                                <th>IMPRIMIR</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        {% for principal in central %}
+                        <tr>
+                            <td width="1%">{{principal.id}}</td>
+                            <td width="9%">{{principal.data}}</td>
+                            <td> {{principal.remetente}}</td>
+                            <td> {{principal.destinatario}} </td>
+                            <td>{{principal.valor_final}}</td>
+                            <td width="1%"><a href="{% url 'comprovante' id=principal.id %}">
+                                <div class="button is-small is-info">Imprimir</div>
+                            </a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript" src={% static "datatables/datatables.min.js" %}></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+
+    $('#tables').DataTable();
+
+    });
+</script>
+{% endblock %}
